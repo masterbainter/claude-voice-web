@@ -97,7 +97,7 @@ echo -e "${YELLOW}Do you want to configure firewall for network access? (y/N)${N
 read -r response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     echo -e "${YELLOW}Configuring firewall...${NC}"
-    sudo ufw allow 3000/tcp
+    sudo ufw allow 3030/tcp
     sudo ufw allow 7880/tcp
     echo -e "${GREEN}✓ Firewall configured${NC}"
 fi
@@ -109,6 +109,8 @@ echo -e "${YELLOW}Starting LiveKit services...${NC}"
 voicemode livekit start
 sleep 3
 
+# Set PORT environment variable for frontend
+export PORT=3030
 voicemode livekit frontend start
 sleep 3
 
@@ -119,8 +121,8 @@ LOCAL_IP=$(ip addr show | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' | 
 echo ""
 echo -e "${YELLOW}Verifying services...${NC}"
 
-if curl -s http://127.0.0.1:3000 &>/dev/null; then
-    echo -e "${GREEN}✓ Frontend is running on port 3000${NC}"
+if curl -s http://127.0.0.1:3030 &>/dev/null; then
+    echo -e "${GREEN}✓ Frontend is running on port 3030${NC}"
 else
     echo -e "${RED}✗ Frontend health check failed${NC}"
 fi
@@ -137,17 +139,17 @@ echo -e "${GREEN}Setup Complete!${NC}"
 echo -e "${GREEN}============================================${NC}"
 echo ""
 echo -e "Access the web interface:"
-echo -e "  ${YELLOW}Local:${NC}   http://localhost:3000"
+echo -e "  ${YELLOW}Local:${NC}   http://localhost:3030"
 if [ -n "$LOCAL_IP" ]; then
-    echo -e "  ${YELLOW}Network:${NC} http://$LOCAL_IP:3000"
+    echo -e "  ${YELLOW}Network:${NC} http://$LOCAL_IP:3030"
 fi
 echo ""
 echo -e "Or open in browser automatically:"
-echo -e "  ${YELLOW}voicemode livekit frontend open${NC}"
+echo -e "  ${YELLOW}xdg-open http://localhost:3030${NC}"
 echo ""
 echo -e "Access from phone/tablet:"
 echo -e "  1. Connect to same WiFi network"
-echo -e "  2. Open browser to http://$LOCAL_IP:3000"
+echo -e "  2. Open browser to http://$LOCAL_IP:3030"
 echo -e "  3. Allow microphone access"
 echo -e "  4. Start talking!"
 echo ""

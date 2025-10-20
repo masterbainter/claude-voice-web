@@ -30,8 +30,8 @@ cd claude-voice-web
 ```
 
 Then access from your browser:
-- **Local**: http://localhost:3000
-- **Network**: http://YOUR_IP:3000 (from phone/tablet)
+- **Local**: http://localhost:3030
+- **Network**: http://YOUR_IP:3030 (from phone/tablet)
 
 ## Manual Installation
 
@@ -88,12 +88,12 @@ voicemode livekit frontend start
 
 **From local machine:**
 ```
-http://localhost:3000
+http://localhost:3030
 ```
 
 **From phone/tablet on same network:**
 ```
-http://YOUR_LOCAL_IP:3000
+http://YOUR_LOCAL_IP:3030
 ```
 
 Find your local IP:
@@ -114,7 +114,7 @@ ip addr show | grep "inet " | grep -v 127.0.0.1
 
 1. Connect phone to same WiFi network as your computer
 2. Open browser on phone (Safari, Chrome, etc.)
-3. Navigate to `http://YOUR_COMPUTER_IP:3000`
+3. Navigate to `http://YOUR_COMPUTER_IP:3030`
 4. Allow microphone access
 5. Tap "Connect" and start talking
 
@@ -156,13 +156,12 @@ ip addr show | grep "inet " | grep -v 127.0.0.1
 
 ### Frontend Port
 
-Default: `3000`
+Default: `3030`
 
-Change in `~/.voicemode/config.yaml`:
-```yaml
-livekit:
-  frontend:
-    port: 3000
+Change via environment variable:
+```bash
+export PORT=3030
+voicemode livekit frontend start
 ```
 
 ### LiveKit Server
@@ -181,7 +180,7 @@ bind_addresses:
 **Allow through firewall:**
 ```bash
 # Frontend
-sudo ufw allow 3000/tcp
+sudo ufw allow 3030/tcp
 
 # LiveKit server
 sudo ufw allow 7880/tcp
@@ -215,7 +214,7 @@ voicemode livekit frontend open
 ### Can't Connect from Phone
 
 1. **Check same network**: Ensure phone is on same WiFi
-2. **Check firewall**: Allow port 3000
+2. **Check firewall**: Allow port 3030
 3. **Check IP address**: Use correct local IP, not 127.0.0.1
 4. **Try HTTPS**: Some browsers require HTTPS for microphone
 
