@@ -64,7 +64,9 @@ if ! sudo -n true 2>/dev/null; then
     echo "Please enter your password for sudo access:"
 fi
 
-sudo voicemode livekit install
+# Use full path to voicemode for sudo
+VOICEMODE_PATH=$(which voicemode)
+sudo -E env "PATH=$PATH" "$VOICEMODE_PATH" livekit install
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}✗ LiveKit installation failed${NC}"
